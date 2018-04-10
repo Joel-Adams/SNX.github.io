@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Events on Red Hat | Public Sector</title>
+    <link>http://redhatgov.io/events/</link>
+    <description>Recent content in Events on Red Hat | Public Sector</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 05 Jun 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://redhatgov.io/events/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>DevNation Federal</title>
+      <link>http://redhatgov.io/events/20180605-devnation-federal-d28cbb978440bf03c49a088a412a20b6/</link>
+      <pubDate>Tue, 05 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://redhatgov.io/events/20180605-devnation-federal-d28cbb978440bf03c49a088a412a20b6/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Red Hat Summit government &amp; education luncheon</title>
+      <link>http://redhatgov.io/events/20180510-red-hat-summit-government-education-luncheon-18f58220c137c06a284f320cd26ffebc/</link>
+      <pubDate>Thu, 10 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://redhatgov.io/events/20180510-red-hat-summit-government-education-luncheon-18f58220c137c06a284f320cd26ffebc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>HPC Happy Hour at Summit</title>
+      <link>http://redhatgov.io/events/20180508-hpc-happy-hour-at-summit-597d355ec6ff4a6544144aeb66bc591a/</link>
+      <pubDate>Tue, 08 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://redhatgov.io/events/20180508-hpc-happy-hour-at-summit-597d355ec6ff4a6544144aeb66bc591a/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ansible &amp; Storage workshop - McLean</title>
+      <link>http://redhatgov.io/events/20180502-ansible-storage-workshop-mclean-02f2899b384a565168f6e573b3b8b619/</link>
+      <pubDate>Wed, 02 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://redhatgov.io/events/20180502-ansible-storage-workshop-mclean-02f2899b384a565168f6e573b3b8b619/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ansible Automates DC</title>
+      <link>http://redhatgov.io/events/20180419-ansible-automates-dc-942c8983353fb1c8e9e6174171c6113f/</link>
+      <pubDate>Thu, 19 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://redhatgov.io/events/20180419-ansible-automates-dc-942c8983353fb1c8e9e6174171c6113f/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ansible Automates Boston</title>
+      <link>http://redhatgov.io/events/20180411-ansible-automates-boston-3ad4ba040a7f794451b88c33fc02a6fc/</link>
+      <pubDate>Wed, 11 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://redhatgov.io/events/20180411-ansible-automates-boston-3ad4ba040a7f794451b88c33fc02a6fc/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
