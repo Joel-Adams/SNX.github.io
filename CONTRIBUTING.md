@@ -7,27 +7,27 @@
 > This warning will be removed once we have settled on a reasonable set of
 > guidelines for contributions.
 
-### 1 Fork the RedHatGov.io repo
+### 1 Fork the SNX.github.io repo
 
-Forking RedHatGov.io is a simple two-step process.
+Forking SNX.github.io is a simple two-step process.
 
-1. On GitHub, navigate to the https://github.com/RedHatGov/redhatgov.github.io
+1. On GitHub, navigate to the https://github.com/Joel-Adams/SNX.github.io
 repo.
 2. In the top-right corner of the page, click **Fork**.
 
-That's it! Now, you have a [fork][git-fork] of the original RedHatGov/redhatgov.github.io
+That's it! Now, you have a [fork][git-fork] of the original Joel-Adams/SNX.github.io
 repo.
 
 ### 2 Create a local clone of your fork
 
-Right now, you have a fork of the RedHatGov.io repo, but you don't have the files in that repo on your computer. Let's create a [clone][git-clone] of your fork locally on your computer.
+Right now, you have a fork of the SNX.github.io repo, but you don't have the files in that repo on your computer. Let's create a [clone][git-clone] of your fork locally on your computer.
 
 ```sh
-git clone git@github.com:your-username/redhatgov.github.io.git
+git clone git@github.com:your-username/SNX.github.io.git
 cd redhatgov.github.io
 
 # Configure git to sync your fork with the original repo
-git remote add upstream https://github.com/RedHatGov/redhatgov.github.io
+git remote add upstream https://github.com/Joel-Adams/SNX.github.io
 
 # Never push to upstream repo
 git remote set-url --push upstream no_push
@@ -39,9 +39,9 @@ To verify the new upstream repo you've specified for your fork, type
 `git remote -v`. You should see the URL for your fork as `origin`, and the URL for the original repo as `upstream`.
 
 ```sh
-origin  git@github.com:your-username/redhatgov.github.io.git (fetch)
-origin  git@github.com:your-username/redhatgov.github.io.git (push)
-upstream        https://github.com/RedHatGov/redhatgov.github.io (fetch)
+origin  git@github.com:your-username/SNX.github.io.git (fetch)
+origin  git@github.com:your-username/SNX.github.io.git (push)
+upstream        https://github.com/Joel-Adams/SNX.github.io (fetch)
 upstream        no_push (push)
 ```
 
@@ -83,7 +83,7 @@ git push
 
 ### 8 Submit a [pull request][pr]
 
-1. Visit your fork at https://github.com/your-username/redhatgov.github.io.git
+1. Visit your fork at https://github.com/your-username/SNX.github.io.git
 2. Click the `Compare & Pull Request` button next to your `docs` branch.
 
 At this point you're waiting on us. We may suggest some changes or improvements
@@ -100,4 +100,4 @@ repo rather than inside your fork.
 [git-branch]: https://git-scm.com/docs/git-branch
 [git-commit]: https://git-scm.com/docs/git-commit
 [git-push]: https://git-scm.com/docs/git-push
-[pr]: https://github.com/RedHatGov/redhatgov.github.io/compare/
+[pr]: https://github.com/Joel-Adams/SNX.github.io/compare/

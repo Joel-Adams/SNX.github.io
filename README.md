@@ -14,16 +14,12 @@ cover various topics relating to Red Hat's product portfolio.
 
 If you want to build RedHatGov.io right away:
 
-##### You have a working [Hugo environment][hugo].
+##### You have a working [Hugo environment][hugo]. (Including Pygments)
 
-    $ git clone https://github.com/RedHatGov/redhatgov.github.io
-    $ cd redhatgov.github.io
+    $ git clone https://github.com/Joel-Adams/SNX.github.io.git
+    $ cd SNX.github.io
     $ hugo server
 
-## Contributing
+## Setting up on public host
 
-If you have content that you'd like to contribute, check out our
-[contribution guidelines for this project](CONTRIBUTING.md).
-
-[redhatgov]: http://redhatgov.io/
-[hugo]: https://gohugo.io/overview/introduction/
+    $ sudo hugo server --bind=0.0.0.0 --baseUrl=http://{{ DOMAIN }} --port=80

@@ -23,19 +23,19 @@ attention to each step below to save yourself frustration down the road.
 ## Step 1
 
 In the [Prerequisites lab]({{< relref "prerequisites.md" >}}), you were told
-to clone the https://github.com/RedHatGov/redhatgov.github.io repository. This
+to clone the https://github.com/Joel-Adams/SNX.github.io repository. This
 works if you want to pull down the source code and build the site locally
 using Hugo.
 
 If you want to contribute, **we need to fork the repository** so that you have
 your own copy that you can push changes to.
 
-To do that, go to https://github.com/RedHatGov/redhatgov.github.io/fork and
+To do that, go to https://github.com/Joel-Adams/SNX.github.io/fork and
 follow the instructions.
 
 {{% alert info %}}
 After the forking is complete, you will have your own copy at
-https://github.com/YOUR_USERNAME/redhatgov.github.io
+https://github.com/YOUR_USERNAME/SNX.github.io
 {{% /alert %}}
 
 ## Step 2
@@ -47,10 +47,10 @@ If you have not cloned the main repository, follow **Step 2b**.
 
 Open up your **Terminal** and change to the directory where you cloned the main
 repository. This example assumes that location is
-`~/projects/redhatgov.github.io`.
+`~/projects/SNX.github.io`.
 
 ```bash
-$ cd ~/projects/redhatgov.github.io
+$ cd ~/projects/SNX.github.io
 ```
 
 Currently, the main repository is going to be listed as the `origin` remote. We
@@ -62,8 +62,8 @@ the following output.
 
 ```bash
 $ git remote -v
-origin	https://github.com/RedHatGov/redhatgov.github.io.git (fetch)
-origin	https://github.com/RedHatGov/redhatgov.github.io.git (push)
+origin	https://github.com/Joel-Adams/SNX.github.io.git (fetch)
+origin	https://github.com/Joel-Adams/SNX.github.io.git (push)
 ```
 
 Now we will rename the main repository from `origin` to `upstream` and add your
@@ -73,17 +73,17 @@ the 2nd command.
 ```bash
 $ git remote rename origin upstream
 
-$ git remote add origin git@github.com:YOUR_USERNAME/redhatgov.github.io.git
+$ git remote add origin git@github.com:YOUR_USERNAME/SNX.github.io.git
 ```
 
 Let's check `git remote -v` to verify everything looks correct.
 
 ```bash
 $ git remote -v                                                           
-origin	git@github.com:YOUR_USERNAME/redhatgov.github.io.git (fetch)
-origin	git@github.com:YOUR_USERNAME/redhatgov.github.io.git (push)
-upstream	https://github.com/RedHatGov/redhatgov.github.io.git (fetch)
-upstream	https://github.com/RedHatGov/redhatgov.github.io.git (push)
+origin	git@github.com:YOUR_USERNAME/SNX.github.io.git (fetch)
+origin	git@github.com:YOUR_USERNAME/SNX.github.io.git (push)
+upstream	https://github.com/Joel-Adams/SNX.github.io.git (fetch)
+upstream	https://github.com/Joel-Adams/SNX.github.io.git (push)
 ```
 
 Lastly, we need to update your local `docs` branch to point to the remote
@@ -107,24 +107,24 @@ your fork of the repository. This example assumes you are in the
 ```bash
 $ cd ~/projects
 
-$ $ git clone git@github.com:YOUR_USERNAME/redhatgov.github.io.git
+$ $ git clone git@github.com:YOUR_USERNAME/SNX.github.io.git
 ```
 
 Next, let's add the main repository as the `upstream` remote so that you'll be
 able to pull down changes as needed.
 
 ```bash
-$ git remote add upstream https://github.com/RedHatGov/redhatgov.github.io.git
+$ git remote add upstream https://github.com/Joel-Adams/SNX.github.io.git
 ```
 
 Let's check `git remote -v` to verify everything looks correct.
 
 ```bash
 $ git remote -v                                                           
-origin	git@github.com:YOUR_USERNAME/redhatgov.github.io.git (fetch)
-origin	git@github.com:YOUR_USERNAME/redhatgov.github.io.git (push)
-upstream	https://github.com/RedHatGov/redhatgov.github.io.git (fetch)
-upstream	https://github.com/RedHatGov/redhatgov.github.io.git (push)
+origin	git@github.com:YOUR_USERNAME/SNX.github.io.git (fetch)
+origin	git@github.com:YOUR_USERNAME/SNX.github.io.git (push)
+upstream	https://github.com/Joel-Adams/SNX.github.io.git (fetch)
+upstream	https://github.com/Joel-Adams/SNX.github.io.git (push)
 ```
 
 You can now move on to **Step 3**.
@@ -136,10 +136,10 @@ workshop content!
 
 Let's start by copying this example to a new directory. You can find the source
 code for this example workshop at
-`~/projects/redhatgov.github.io/content/workshops/example`.
+`~/projects/SNX.github.io/content/workshops/example`.
 
 ```bash
-$ cd ~/projects/redhatgov.github.io/content/workshops
+$ cd ~/projects/SNX.github.io/content/workshops
 
 $ cp -rv example new_workshop
 ```

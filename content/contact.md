@@ -10,10 +10,9 @@ menu:
 Are you curious about something? Do you have some kind of problem with our
 products?
 
-Please feel free to contact us, our customer service center is working for you
-24 hours a day, 7 days a week.
+Please feel free to contact us we are here to support you.
 
-https://www.redhat.com/en/services/support
+redhatse@synnex.com
 
 If you find any issues with the content on this site, please file an issue on
-our GitHub project at https://github.com/RedHatGov/redhatgov.github.io/
+our GitHub project at https://github.com/Joel-Adams/SNX.github.io
