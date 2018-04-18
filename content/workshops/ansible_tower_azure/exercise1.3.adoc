@@ -125,6 +125,7 @@ mkdir templates
 cd templates
 curl -O http://ansible-workshop.redhatgov.io/workshop-files/httpd.conf.j2
 curl -O http://ansible-workshop.redhatgov.io/workshop-files/index.html.j2
+cd ..
 ----
 
 === Step 2:
