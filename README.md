@@ -1,18 +1,18 @@
-# RedHatGov.io
+# SYNNEX.io
 
 [![Build Status](https://travis-ci.org/RedHatGov/redhatgov.github.io.svg?branch=docs)](https://travis-ci.org/RedHatGov/redhatgov.github.io)
 
 
 ----
 
-[RedHatGov.io][redhatgov] is an open source collection of workshop materials that
+[SYNNEX.io] is an open source collection of workshop materials that
 cover various topics relating to Red Hat's product portfolio.
 
 ----
 
 ## To start developing
 
-If you want to build RedHatGov.io right away:
+If you want to build SYNNEX.io right away:
 
 ##### You have a working [Hugo environment][hugo]. (Including Pygments)
 
