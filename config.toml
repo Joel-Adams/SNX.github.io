@@ -1,11 +1,11 @@
 title = "SYNNEX"
-baseURL = "http://jatest.eastus.cloudapp.azure.com"
+baseURL = "http://workshops.synnex.com"
 theme = "redhatgov"
 languageCode = "en-us"
 metaDataFormat = "yaml"
 
 [params]
-    description = "Tried. Tested. Trusted."
+    description = "Visibility Velocity Value"
 
 [taxonomies]
     workshop = "workshops"
