@@ -39,18 +39,18 @@ function loadVariables() {
 
     if (userid != "") {
     	document.getElementById("userid").value = userid;
-    } 
+    }
     if (prefix != "") {
     	document.getElementById("prefix").value = prefix;
     } else {
     	document.getElementById("prefix").value = "example";
-    } 
+    }
     if (domain != "") {
     	document.getElementById("domain").value = domain;
         replaceclasstext("domain",domain)
         replaceclasstext("prefix",prefix)
         replaceclasstext("userid",userid)
-    } 
+    }
 }
 
 function defaultVariables() {
@@ -61,7 +61,7 @@ function defaultVariables() {
     setCookie("userid", document.getElementById("userid").value);
     setCookie("prefix", document.getElementById("prefix").value);
     setCookie("domain", document.getElementById("domain").value);
-    
+
     var userid = document.getElementById("userid").value;
     var prefix = document.getElementById("prefix").value;
     var domain = document.getElementById("domain").value;
@@ -145,7 +145,7 @@ function setupWorkshop() {
     <option value="47">47</option>
     <option value="48">48</option>
     <option value="49">49</option>
-    <option value="50">50</option>      
+    <option value="50">50</option>
   </select>
   </td></tr></table>
 </td>
@@ -157,7 +157,7 @@ function setupWorkshop() {
 <td>
   <select id="domain">
     <option value="redhatgov.io">redhatgov.io</option>
-    <option value="redhat-fierce.io">redhat-fierce.io</option>
+    <option value="jadams.xyz">jadams.xyz</option>
     <option value="rhtps.io">rhtps.io</option>
   </select>
 </td>
