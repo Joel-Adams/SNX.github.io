@@ -1,0 +1,204 @@
+---
+title: "Exercise 2.1 - SCM Web Hooks"
+workshops: openshift_v3_azure
+workshop_weight: 10
+layout: lab
+---
+
+:domain_name: redhatgov.io
+:icons: font
+:imagesdir: /workshops/openshift_v3_azure/images
+
+
+= Exercise 2.1 - SCM Web Hooks
+
+== Section 1: SCM Web Hooks
+
+OpenShift offers several mechanisms to trigger the automatic deployment of applications. In this Lab, we will demonstrate the deployment of a very simple application via a GitHub Web Hook trigger.
+
+*Part I*
+
+In Part I of the Lab we will:
+
+- Create a new project.
+- Deploy an application using a source to image strategy.
+- Create a route to expose the newly deployed application.
+
+=== Step 1: Create a new project
+
+[source,bash]
+----
+oc new-project scm-web-hooks-{{< urifqdn_user "labuser""" >}} --display-name="Test WebHooks"
+----
+
+=== Step 2: Create new application
+
+- Login into GitLab https://github.com/login.
+- Create your user account if you dont already have one.
+- Fork this repository https://github.com/RedHatWorkshops/bluegreen into your account by clicking in the Fork button to the right of the repository name.
+
+====
+[NOTE]
+Please replace your_github_username with the your github username in the commands below.
+====
+
+[source,bash]
+----
+oc new-app --image-stream=php --code=https://github.com/your_github_username/bluegreen.git --name=scm-web-hooks
+----
+
+image::lab10-oc_new_app.png['oc_new_app', width=1024]
+
+=== Step 3: Look at some of the created resources
+
+Build configuration
+
+[source,bash]
+----
+oc get bc
+----
+
+Deployment configuration
+
+[source,bash]
+----
+oc get dc
+----
+
+Show created service
+
+[source,bash]
+----
+oc get service
+----
+
+Show replication controller
+
+[source,bash]
+----
+oc get rc
+----
+
+Show route
+
+[source,bash]
+----
+oc get route
+----
+
+Notice that there is no route created yet for this application.
+
+Show the builds in progress (Running)
+
+[source,bash]
+----
+oc get builds
+----
+
+Monitor the build
+
+[source,bash]
+----
+oc logs build/scm-web-hooks-1
+----
+
+The build should finish similar to:
+
+image::lab10-oc_build_logs.png['oc_build_logs', width=1024]
+
+=== Step 4: Create a route
+
+[source,bash]
+----
+oc get service
+----
+
+====
+[NOTE]
+In this example, I am using a domain name of *104.209.170.217.nip.io*. Ask the instructor for the domain name suffix for your setup an change it.
+====
+
+[source,bash]
+----
+oc expose service scm-web-hooks --hostname=scm-web-hooks.{{< urifqdn_user "labuser""" >}}.104.209.170.217.nip.io
+----
+
+=== Step 5: Test the application
+
+Use the newly created route, in the above case scm-web-hooks.{{< urifqdn_user "labuser""" >}}.104.209.170.217.nip.io and paste it in your browser.
+
+You should see:
+
+image::lab10-blue_deployment.png['blue_deployment', width=1024]
+
+*Part II*
+
+At this point you have an application with one single replica running inside a docker container in OpenShift. We used the source retrieved from the git repository and layered it using a builder or image stream strategy; in this particular case, the php image stream.
+
+In this part of the Lab we will:
+
+- Create a web hook for the recently deployed application.
+- Make a small change to the application.
+- Test to make sure the application was re-deployed.
+
+=== Step 1: Retrieve the OpenShift Web Hook URL
+
+- Navigate to the OpenShift Web console and login.
+- Select your *Test WebHooks* project, and click *Builds* and then *Builds*.
+- Click onto the build name from the list. You should have just one in this case.
+- Click *Configuration* tab to get list of *Triggers* for the GitHub link.
+- Copy the *GitHub webhook URL*. You will need this URL for next step.
+
+image::lab10-github_show_url.png['github_show_url', width=1024]
+
+=== Step 2: Configure GitHub repository Web Hook
+
+- Login to your GitHub account.
+- Navigate to the forked repository you used to create the application.
+- Click on Settings.
+- Click on Webhooks.
+- Click on the Add webhook button.
+- Add the recently copied Web Hook URL from OpenShift.
+- Change the Content-type as ``application/json''
+- Click on the Disable SSL Verification button.
+- Confirm by adding the Add Webhook button in green at the bottom of the page.
+
+image::lab10-github_add_webhook.jpg['github_add_webhook', width=1024]
+
+=== Step 3: Redeploy the application
+
+- Navigate to the forked bluegreen repository you used to create the application.
+- Select the image.php file, then select the pencil to edit the file.
+- Comment out the imagefilledrectangle() line by placing a `//` infront of it.
+- Add the following after the line you just commented out.
+
+[source,bash]
+----
+ImageFillToBorder($im, 0, 0, $white, $white);
+imageRectangle($im, 0, 0, 199, 199, $color);
+----
+
+- Commit the file
+
+=== Step 4: Monitor new deployment process
+
+- After saving/committing the image.php file with the small change, you’ll notice in the OpenShift Web Console that a new build process has been automatically triggered. You didn’t have to start a build yourself.
+- Monitor the build process using:
+
+[source,bash]
+----
+oc get builds
+----
+
+[source,bash]
+----
+oc logs build/the-new-build-process-name
+----
+
+After a new pod is deployed, refreshing the browser should reveal a blue square outline with a white center.
+
+*Summary*
+
+We have shown in this Lab how simple it is to configure automatic deployments of applications using OpenShift and GitHub Web Hook triggers. It should be noted that OpenShift also supports Generic Web Hooks.
+
+{{< importPartial "footer/footer_openshift_v3_azure.html" >}}

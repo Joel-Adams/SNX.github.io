@@ -1,0 +1,151 @@
+---
+title: "Exercise 1.6 - Scale up and Scale down and Idle the application instances"
+workshops: openshift_v3_azure
+workshop_weight: 10
+layout: lab
+---
+
+:domain_name: redhatgov.io
+:icons: font
+:imagesdir: /workshops/openshift_v3_azure/images
+
+
+= Exercise 1.6 - Scale up and Scale down and Idle the application instances
+
+== Section 1: Scale up and Scale down and Idle the application instances
+
+In this exercise we will learn how to scale our application. OpenShift has the capability to scale your application and make sure that many instances are always running.
+
+=== Step 1: Switch to an existing project
+
+For this exercise, we will be using an already running application. We will be using the mycliproject-{{< urifqdn_user "labuser""" >}} that you created in the previous labs. Make sure you are switched to that project by using the 'oc project' command and remember to substitute UserName.
+
+[source,bash]
+----
+oc project mycliproject-{{< urifqdn_user "labuser""" >}}
+----
+
+=== Step 2: View the deployment config
+
+Take a look at the `deploymentConfig` (or `dc`) of the `myhttpdapp` application
+
+[source,bash]
+----
+oc get deploymentConfig/myhttpdapp -o yaml
+----
+
+Note that the *replicas*: is set to *1*. This tells OpenShift that when this application deploys, make sure that there is 1 instance.
+
+The *replicationController* mirrors this configuration initially; the `replicationController` (or `rc`) will ensure that there is always the set number of instances always running.
+
+To view the `rc` for your application first get the current pod running.
+
+[source,bash]
+----
+oc get pods
+----
+
+This shows that the build `myhttpdapp-1` is running in pod `45jtc`. Let us view the `rc` on this build.
+
+[source,bash]
+----
+oc get rc/myhttpdapp-1
+----
+====
+[NOTE]
+You can change the number of replicas in DeploymentConfig or the ReplicationController.
+====
+
+However note that if you change the `deploymentConfig` it applies to your application. This means, even if you delete the current replication controller, the new one that gets created will be assigned the REPLICAS value based on what is set for DC. If you change it on the Replication Controller, the application will scale up. But if you happen to delete the current replication controller for some reason, you will loose that setting.
+
+
+=== Step 3: Scale Application
+
+To scale your application we will edit the `deploymentConfig` to *3*.
+
+Open your browser to the Overview page and note you only have one instance running.
+
+image::lab6-single_pod.png['single_pod', width=1024]
+
+Now scale your application using the `oc scale` command (remembering to specify the `dc`)
+
+[source,bash]
+----
+oc scale --replicas=3 dc/myhttpdapp
+----
+
+If you look at the web console and you will see that there are 3 instances running now
+
+image::lab6-thee_pods.png['thee_pods', width=1024]
+
+====
+[NOTE]
+You can also scale up and down from the web console by going to the project overview page and clicking twice on up arrow right next to the pod count circle to add 2 more pods.
+====
+
+On the command line, see how many pods you are running now:
+
+[source,bash]
+----
+oc get pods
+----
+
+You now have 3 instances of `myhttpdapp-1` running (each with a different pod-id). If you check the `rc` of the `myhttpdapp-1` build you will see that it has been updated by the 'dc'.
+
+[source,bash]
+----
+oc get rc/myhttpdapp-1
+----
+
+=== Step 4: Idling the application
+
+Run the following command to find the available endpoints
+
+[source,bash]
+----
+oc get endpoints
+----
+
+Note that the name of the endpoints is `myhttpdapp` and there are three ips addresses for the three pods.
+
+Run the 'oc idle endpoints/myhttpdapp' command to idle the application
+
+[source,bash]
+----
+oc idle endpoints/myhttpdapp
+----
+
+Go back to the webconsole. You will notice that the pods show up as idled.
+
+image::lab6-idled_pods.jpeg['idled_pods', width=1024]
+
+At this point the application is idled, the pods are not running and no resources are being used by the application. This doesn’t mean that the application is deleted. The current state is just saved.. that’s all.
+
+=== Step 6: Reactivate your application
+
+Now click on the application route URL or access the application via curl.
+
+====
+[NOTE]
+It takes a little while for the application to respond. This is because pods are spinning up again. You can notice that in the web console.
+====
+
+In a little while the output comes up and your application would be up with 3 pods.
+
+So, as soon as the user accesses the application, it comes up!!!
+
+=== Step 7: Scaling Down
+
+Scaling down is the same procedure as scaling up. Use the `oc scale` command on the `myhttpdapp` application `dc` setting.
+
+[source,bash]
+----
+oc scale --replicas=1 dc/myhttpdapp
+----
+
+Alternately, you can go to project overview page and click on down arrow twice to remove 2 running pods.
+
+Congratulations!! In this exercise you have learned about scaling and how to scale up/down your application on OpenShift!
+
+
+{{< importPartial "footer/footer_openshift_v3_azure.html" >}}

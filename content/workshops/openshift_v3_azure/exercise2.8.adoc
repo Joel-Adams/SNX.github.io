@@ -1,0 +1,180 @@
+---
+title: "Exercise 2.8 - Dynamic configuration updates using ConfigMap"
+workshops: openshift_v3_azure
+workshop_weight: 10
+layout: lab
+---
+
+:domain_name: redhatgov.io
+:icons: font
+:imagesdir: /workshops/openshift_v3_azure/images
+
+
+= Exercise 2.8 - Dynamic configuration updates using ConfigMap
+
+== Section 1: Dynamic configuration updates using ConfigMap
+
+In this lab, we will learn how to dynamically update this configuration in a running pod. We will do this with an example by changing the database connection to use a PostgreSQL database.
+
+In the last lab, we created a configuration to connect to the MySQL database by mounting *application.properties* file using ConfigMap.
+
+=== Step 1: Create PostgreSQL Pod
+
+Ensure you are in the spring-{{< urifqdn_user "labuser""" >}}
+
+Based on what you have learned in the previous labs, create a new Postgresql database pod i.e. *Add to project*, search for *postgresql*, choose *postgresql-ephemeral*. You will need to key in the following values.
+
+- Database Service Name: postgresql
+- MySQL Connection Username: user
+- MySQL Connection Password: password
+- MySQL Database Name: sampledb
+
+Feel free to use your own values, but make a note of the same (write down..we will need these)
+
+Click on the *Create* button and within a few min or two your PostgreSQL database pod should be up and running.
+
+=== Step 2: Add data to the database
+
+While the code has *schema-postgresql.sql* and *data-postgresql.sql* files, these scripts will only be executed if the pod restarts. Since we are going to use this database without restarting the bootapp pod, we will add the data manually.
+
+Select the *postgresql* pod and navigate to the *terminal*.
+
+Login to the database from CLI
+
+[source,bash]
+----
+psql -h 127.0.0.1 -U $POSTGRESQL_USER -q -d $POSTGRESQL_DATABASE
+----
+
+This will log you into the psql CLI.
+
+Now create the table using the script
+
+[source,bash]
+----
+CREATE TABLE IF NOT EXISTS customer (
+   CUST_ID serial primary key,
+   NAME varchar(100) NOT NULL,
+   AGE integer NOT NULL);
+----
+
+and then add some data as shown below. You can change the values if you wish.
+
+[source,bash]
+----
+insert into customer (name,age) values ('Joe Psql', 88);
+insert into customer (name,age) values ('Jack Psql', 54);
+insert into customer (name,age) values ('Ann Psql', 32);
+----
+
+These scripts are available here - https://github.com/RedHatWorkshops/spring-sample-app/blob/master/src/main/resources/schema-postgresql.sql
+
+https://github.com/RedHatWorkshops/spring-sample-app/blob/master/src/main/resources/data-postgresql.sql
+
+
+=== Step 3: Update ConfigMap
+
+Now let us update the ConfigMap to change the *application.properties* to point to *postgresql* datasource.
+
+Using CLI run the following command after you ensure you are in the spring-{{< urifqdn_user "labuser""" >}} project
+
+[source,bash]
+----
+oc edit configmap app-props
+----
+Edit the datasource parameters as below
+
+[source,bash]
+----
+    spring.datasource.platform=postgresql
+    spring.datasource.url= jdbc:postgresql://postgresql.spring-{{< urifqdn_user "labuser""" >}}:5432/sampledb
+    spring.datasource.username=user
+    spring.datasource.password=password
+----
+
+*Do this slowly. Double check every parameter*
+
+Specifically note the *spring.datasource.url*. It is in the following format:
+
+spring.datasource.url = jdbc:[databasetype]://[service-host]:[service-port]/[dbname]
+
+Here
+- databasetype is `postgresql`
+- service-host can be ip-address of the service or the service name. Above, it is configured as service-name.projectname. This is the fully qualified service name discoverable by kubernetes. Kubernetes uses SkyDNS.
+- service-port for postgresql is `5432`
+
+*Note* that this change does not redeploy the pod. You can check the pod details to see how long the pod has been running for.
+
+Now verify the application.properties inside the pod (Go to bootapp pod terminal on the Web Console or use oc rsh) . You will note that the *application.properties* file is now updated as a result of updating the ConfigMap.
+
+[source,bash]
+----
+cat config/application.properties
+----
+
+image::lab17-cat_config.png['cat_config', width=1024]
+
+=== Step 4: Test your application
+
+Click the application url now i.e http://bootapp-spring-{{< urifqdn_user "labuser""" >}}.104.209.170.217.nip.io/.
+
+====
+[NOTE]
+In this example, I am using a domain name of *104.209.170.217.nip.io*. Ask the instructor for the domain name suffix for your setup an change it.
+====
+
+It will open a new tab and your running application will greet you
+
+Hello from bootapp-2-06a4b
+
+Also watch the pod logs either using web console or using CLI. For example `oc logs -f bootapp-2-06a4b` Watch out for connection url in the output.
+
+Now try the /dbtest endpoint i.e. http://bootapp-spring-{{< urifqdn_user "labuser""" >}}.104.209.170.217.nip.io/dbtest.
+
+Note that the output is still from the MySQLDB.
+
+[source,bash]
+----
+Customers List
+
+CustomerId: 2 Customer Name: Joe Mysql Age: 88
+CustomerId: 3 Customer Name: Jack Mysql Age: 54
+CustomerId: 4 Customer Name: Ann Mysql Age: 32
+----
+
+Also the pod logs show that connection url is
+
+connection url: jdbc:mysql://mysql.spring-{{< urifqdn_user "labuser""" >}}:3306/sampledb?useSSL=false
+
+So even after the *application.properties* file is updated in the pod, it is not picked up. The reason is that springboot app caches the environment variables. This application has a *@RefreshScope* annotation. So we can invoke */refresh* endpoint to refresh the cache. Run the following command from CLI to refresh the cache.
+
+[source,bash]
+----
+curl -X POST http://bootapp-spring-{{< urifqdn_user "labuser""" >}}.104.209.170.217.nip.io/refresh
+----
+
+Now note that the pod logs show that the application context is refreshed.
+
+2016-11-18 04:25:35.601  INFO 10 --- [io-8080-exec-10] s.c.a.AnnotationConfigApplicationContext : Refreshing
+
+Now try the /dbtest endpoint again. Now the result will show the data from the postgresql database.
+
+[source,bash]
+----
+Customers List
+
+
+CustomerId: 1 Customer Name: Joe Psql Age: 88
+CustomerId: 2 Customer Name: Jack Psql Age: 54
+CustomerId: 3 Customer Name: Ann Psql Age: 32
+----
+
+Also note the logs will show the connection url as
+
+connection url: jdbc:postgresql://postgresql.spring-{{< urifqdn_user "labuser""" >}}:5432/sampledb
+
+*Note* in this exercise, the pod was never redeployed. The application.properties were dynamically updated.
+
+*Summary:* In this lab, we have learned the ConfigMap’s flexibility and how it allows dynamic updates to the pod configuration.
+
+{{< importPartial "footer/footer_openshift_v3_azure.html" >}}
